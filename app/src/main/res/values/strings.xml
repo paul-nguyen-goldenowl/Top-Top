@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TopTop</string>
+    <string name="more">more</string>
+    <string name="profile">profile</string>
+    <string name="sign_up_for_an_account">Sign up for an account</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_up_for_top_top">Sign up for TopTop</string>
+    <string name="create_a_profile">Create a profile follow other accounts, make your own videos, and more.</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="use_phone_or_email">Use phone or email</string>
+    <string name="continue_with_google">Continue with google</string>
+    <string name="by_continue"><![CDATA[By continuing, you agree to TopTop\'s <b>Term of Service</b><br>and confirm that you have read TopTop\'s <b>Privacy Policy</b>.]]></string>
+    <string name="already_have_account"><![CDATA[Already have an account? <b>Log in</b>]]></string>
+    <string name="dont_have_account"><![CDATA[Don\'t have an account? <b>Sign up</b>]]></string>
+    <string name="log_in_to_toptop">Log in to TopTop</string>
+    <string name="log_in_description">Manage your account, check notification, comment on videos, and more.</string>
+    <string name="use_phone_email_username">User phone  / email / username</string>
+    <string name="title_home">home</string>
+    <string name="discover">discover</string>
+    <string name="inbox">inbox</string>
 </resources>
