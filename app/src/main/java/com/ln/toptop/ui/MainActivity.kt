@@ -37,4 +37,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
     override fun showLoading(loading: Boolean) {
         binding.progressBar.isVisible = loading
     }
+
+    override fun showNavigation(visible: Boolean) {
+        binding.bottomNavBar.isVisible = visible
+        binding.imageViewAddIcon.isVisible = visible
+    }
 }
