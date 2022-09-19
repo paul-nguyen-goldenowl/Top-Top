@@ -7,9 +7,11 @@ import android.text.SpannableString
 import android.text.style.ClickableSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.view.forEach
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -49,4 +51,22 @@ fun BottomNavigationView.disableTooltip() {
             it.isHapticFeedbackEnabled = false
         }
     }
+}
+
+fun ImageView.loadUrl(avatar: String?, circle: Boolean = false) {
+    if (avatar == null)
+        return
+    val builder = Glide.with(context)
+        .load(avatar)
+    if (circle)
+        builder.circleCrop()
+    builder.into(this)
+}
+
+fun View.hide() {
+    visibility = View.GONE
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="appbarHeight">64dp</dimen>
+    <dimen name="appbarHeight">50dp</dimen>
     <dimen name="registerSheetHeight">333dp</dimen>
 </resources>
