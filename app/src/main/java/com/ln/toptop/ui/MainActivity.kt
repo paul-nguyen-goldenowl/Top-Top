@@ -15,7 +15,7 @@ import com.ln.simplechat.ui.viewBindings
 import com.ln.toptop.R
 import com.ln.toptop.databinding.ActivityMainBinding
 import com.ln.toptop.ui.main.LayoutController
-import com.ln.toptop.util.disableTooltip
+import com.ln.toptop.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
