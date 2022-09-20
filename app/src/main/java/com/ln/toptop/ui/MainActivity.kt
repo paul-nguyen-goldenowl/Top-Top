@@ -54,10 +54,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                this,
                 Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
@@ -75,7 +71,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
             this,
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
                 Manifest.permission.RECORD_AUDIO
             ),

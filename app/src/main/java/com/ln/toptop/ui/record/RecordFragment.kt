@@ -43,7 +43,8 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (shouldInterceptBackPress()) {
-                    showConfirmDialog()
+                    if (viewModel.state.value?.recording != true)
+                        showConfirmDialog()
                 } else {
                     showNavigation(true)
                     isEnabled = false
