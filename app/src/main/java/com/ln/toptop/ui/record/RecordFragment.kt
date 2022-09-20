@@ -1,8 +1,9 @@
 package com.ln.toptop.ui.record
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+
 @AndroidEntryPoint
 class RecordFragment : BaseFragment(R.layout.fragment_record) {
 
@@ -35,16 +37,29 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
         showNavigation(false)
     }
 
-    override fun setObservers() {
-        viewModel.state.observe(viewLifecycleOwner) { state ->
-            toggleUI(state)
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (shouldInterceptBackPress()) {
+                    showConfirmDialog()
+                } else {
+                    showNavigation(true)
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
     }
 
-    private fun toggleUI(state: RecordState) {
-        binding.btnUpload.isGone = state.started
-        binding.btnFinishRecord.isVisible = state.started
-        binding.btnDiscard.isVisible = state.started && state.recording
+    private fun shouldInterceptBackPress(): Boolean {
+        return viewModel.state.value?.started == true
+    }
+
+    override fun setObservers() {
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+        }
     }
 
     override fun setLayout() {
@@ -55,8 +70,8 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
     private fun setButtons() {
         setRecordButton()
         binding.btnClose.setOnClickListener {
-            findNavController().popBackStack()
             showNavigation(true)
+            findNavController().navigateUp()
         }
         binding.permissionsLayout.grantPermissionsBtn.setOnClickListener {
             binding.permissionsLayout.permissionsLayout.isVisible = false
@@ -74,21 +89,21 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
                 binding.btnDiscard.show()
 
                 lifecycleScope.launch {
-                    val fileDescriptor =
-                        viewModel.startVideo(requireContext()) ?: return@launch
-                    cameraView.takeVideo(fileDescriptor)
                 }
+                val file =
+                    viewModel.startRecord(requireContext())
+                cameraView.takeVideo(file)
             }
 
             override fun onResumeRecord() {
                 Timber.d("onResumeRecord")
-                viewModel.resumeVideo()
+                viewModel.resumeRecord()
             }
 
             override fun onPauseRecord() {
                 Timber.d("onPauseRecord")
                 cameraView.stopVideo()
-                viewModel.pauseVideo()
+                viewModel.pauseRecord()
             }
 
             override fun onEndRecord() {
@@ -111,7 +126,7 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
             facing = Facing.BACK
             audio = Audio.ON
             mode = Mode.VIDEO
-//            addCameraListener(viewModel.getCameraListener(requireContext()))
+            addCameraListener(viewModel.getCameraListener(requireContext()))
             mapGesture(Gesture.PINCH, GestureAction.ZOOM)
             mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
         }
@@ -121,21 +136,38 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
         super.onResume()
         if (!checkPermission()) {
             showDialog()
+        } else {
+            if (!cameraView.isOpened) {
+                cameraView.open()
+            }
         }
     }
 
     override fun onStop() {
         super.onStop()
         cameraView.close()
-        viewModel.stopVideo(requireContext())
+        viewModel.stopRecord(requireContext())
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         cameraView.destroy()
+        super.onDestroy()
     }
 
     private fun showDialog() {
         binding.permissionsLayout.permissionsLayout.isVisible = true
+    }
+
+    private fun showConfirmDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(getString(R.string.discard_current_sound))
+            .setPositiveButton(getString(R.string.discard)) { _, _ ->
+                showNavigation(true)
+                findNavController().navigateUp()
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

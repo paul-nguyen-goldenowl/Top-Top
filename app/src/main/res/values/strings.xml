@@ -41,4 +41,7 @@
     <string name="pause_recording">Pause recording</string>
     <string name="start_recording">Start recording</string>
     <string name="finish_recording">Finish recording</string>
+    <string name="discard_current_sound">Discard current sound and recording progress?</string>
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
 </resources>

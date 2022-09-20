@@ -1,259 +1,255 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="16dp">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.otaliastudios.cameraview.CameraView
-            android:id="@+id/camera_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/btnClose"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="16dp"
+        android:padding="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close"
+        app:tint="@android:color/white"
+        tools:ignore="ContentDescription" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnClose"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/btnClose"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="16dp"
-            android:padding="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close"
-            app:tint="@android:color/white"
+            android:id="@+id/btnFlip"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/right_divider"
+            app:layout_constraintTop_toBottomOf="@+id/top_divider"
+            app:srcCompat="@drawable/ic_flip"
+            app:tint="@color/white"
             tools:ignore="ContentDescription" />
 
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnClose"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageView
-                android:id="@+id/btnFlip"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintEnd_toStartOf="@+id/right_divider"
-                app:layout_constraintTop_toBottomOf="@+id/top_divider"
-                app:srcCompat="@drawable/ic_flip"
-                app:tint="@color/white"
-                tools:ignore="ContentDescription" />
-
-
-            <TextView
-                android:id="@+id/tvFlip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/flip"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/flip_camera_btn"
-                app:layout_constraintStart_toStartOf="@+id/flip_camera_btn"
-                app:layout_constraintTop_toBottomOf="@+id/flip_camera_btn" />
-
-            <ImageView
-                android:id="@+id/btnSpeed"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toStartOf="@+id/right_divider"
-                app:layout_constraintTop_toBottomOf="@+id/top_divider"
-                app:srcCompat="@drawable/ic_speed"
-                app:tint="@color/white"
-                tools:ignore="ContentDescription" />
-
-
-            <TextView
-                android:id="@+id/tvSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/flip"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/flip_camera_btn"
-                app:layout_constraintStart_toStartOf="@+id/flip_camera_btn"
-                app:layout_constraintTop_toBottomOf="@+id/flip_camera_btn" />
-
-            <ImageView
-                android:id="@+id/btnFilter"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:contentDescription="@string/filters"
-                app:srcCompat="@drawable/ic_filter"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/tvFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/filters"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:id="@+id/enhance_btn"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:contentDescription="@string/beautify"
-                app:srcCompat="@drawable/ic_beautify"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/enhance_plain_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/beautify"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
-
-            <ImageView
-                android:id="@+id/btnTimer"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/timer"
-                android:paddingTop="6dp"
-                app:srcCompat="@drawable/ic_timer"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/tvTimer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/timer"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:id="@+id/flash_btn"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:contentDescription="@string/flash"
-                app:srcCompat="@drawable/ic_flash_off"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/flash_plain_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/flash"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/btnUpload"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:contentDescription="@string/upload"
-            android:padding="1dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@id/btnRecord"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnRecord"
-            app:layout_constraintTop_toTopOf="@id/btnRecord"
-            app:srcCompat="@drawable/ic_upload_record"
-            tools:visibility="visible" />
-
         <TextView
-            android:id="@+id/tvUpload"
+            android:id="@+id/tvFlip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/cabin_medium"
-            android:text="@string/upload"
-            android:textColor="@color/white"
-            android:textSize="11sp"
-            app:layout_constraintEnd_toEndOf="@id/btnUpload"
-            app:layout_constraintStart_toStartOf="@id/btnUpload"
-            app:layout_constraintTop_toBottomOf="@id/btnUpload" />
-
-        <TextView
-            android:id="@+id/tvSound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/messenger_button_send_round_shadow"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:text="@string/sounds"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/flip"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:drawableStartCompat="@drawable/ic_sound_small"
-            app:drawableTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/btnClose"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnClose" />
-
-        <com.ln.toptop.ui.record.RecordButton
-            android:id="@+id/btnRecord"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="36dp"
-            app:innerCircleColor="@color/tt_pink"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:progressColor="@color/tt_pink" />
+            app:layout_constraintEnd_toEndOf="@+id/flip_camera_btn"
+            app:layout_constraintStart_toStartOf="@+id/flip_camera_btn"
+            app:layout_constraintTop_toBottomOf="@+id/flip_camera_btn" />
 
         <ImageView
-            android:id="@+id/btnFinishRecord"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_finish_record"
-            android:clickable="true"
-            android:contentDescription="@string/finish_recording"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@id/btnRecord"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnRecord" />
+            android:id="@+id/btnSpeed"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/right_divider"
+            app:layout_constraintTop_toBottomOf="@+id/top_divider"
+            app:srcCompat="@drawable/ic_speed"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/tvSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/flip"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/flip_camera_btn"
+            app:layout_constraintStart_toStartOf="@+id/flip_camera_btn"
+            app:layout_constraintTop_toBottomOf="@+id/flip_camera_btn" />
 
         <ImageView
-            android:id="@+id/btnDiscard"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_discard"
-            android:clickable="true"
-            android:contentDescription="@string/finish_recording"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@id/btnRecord"
-            app:layout_constraintEnd_toStartOf="@id/btnFinishRecord"
-            app:layout_constraintStart_toEndOf="@id/btnRecord"
-            app:layout_constraintTop_toTopOf="@id/btnRecord" />
+            android:id="@+id/btnFilter"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/filters"
+            app:srcCompat="@drawable/ic_filter"
+            app:tint="@color/white" />
 
-        <include
-            android:id="@+id/permissions_layout"
-            layout="@layout/permissions_layout"
-            android:visibility="gone"
-            tools:visibility="gone" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/filters"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/enhance_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/beautify"
+            app:srcCompat="@drawable/ic_beautify"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/enhance_plain_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/beautify"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+        <ImageView
+            android:id="@+id/btnTimer"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/timer"
+            android:paddingTop="6dp"
+            app:srcCompat="@drawable/ic_timer"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/timer"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/flash_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/flash"
+            app:srcCompat="@drawable/ic_flash_off"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/flash_plain_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/flash"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btnUpload"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:contentDescription="@string/upload"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnRecord"
+        app:layout_constraintTop_toTopOf="@id/btnRecord"
+        app:srcCompat="@drawable/ic_upload_record"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_medium"
+        android:includeFontPadding="false"
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/btnRecord"
+        app:layout_constraintEnd_toEndOf="@id/btnUpload"
+        app:layout_constraintStart_toStartOf="@id/btnUpload"
+        app:layout_constraintTop_toBottomOf="@id/btnUpload" />
+
+    <TextView
+        android:id="@+id/tvSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/messenger_button_send_round_shadow"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/sounds"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:drawableStartCompat="@drawable/ic_sound_small"
+        app:drawableTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/btnClose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnClose" />
+
+    <com.ln.toptop.ui.record.RecordButton
+        android:id="@+id/btnRecord"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="36dp"
+        app:innerCircleColor="@color/tt_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progressColor="@color/tt_pink" />
+
+    <ImageView
+        android:id="@+id/btnFinishRecord"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_finish_record"
+        android:clickable="true"
+        android:contentDescription="@string/finish_recording"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnRecord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnRecord" />
+
+    <ImageView
+        android:id="@+id/btnDiscard"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/ic_discard"
+        android:clickable="true"
+        android:contentDescription="@string/finish_recording"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnRecord"
+        app:layout_constraintEnd_toStartOf="@id/btnFinishRecord"
+        app:layout_constraintStart_toEndOf="@id/btnRecord"
+        app:layout_constraintTop_toTopOf="@id/btnRecord" />
+
+    <include
+        android:id="@+id/permissions_layout"
+        layout="@layout/permissions_layout"
+        android:visibility="gone"
+        tools:visibility="gone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

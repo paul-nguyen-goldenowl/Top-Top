@@ -21,12 +21,12 @@ class RecordButton @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     interface ActionListener {
-        fun onStartRecord()
-        fun onResumeRecord()
-        fun onPauseRecord()
-        fun onEndRecord()
-        fun onDiscardRecord()
-        fun onDurationTooShortError()
+        fun onStartRecord() {}
+        fun onResumeRecord() {}
+        fun onPauseRecord() {}
+        fun onEndRecord() {}
+        fun onDiscardRecord() {}
+        fun onDurationTooShortError() {}
     }
 
     var actionListener: ActionListener? = null
