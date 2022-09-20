@@ -10,4 +10,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_black">#525252</color>
     <color name="dark_black">#272525</color>
+
+    <color name="tt_pink">#EF3250</color>
+    <color name="light_grey">#F5F5F5</color>
+    <color name="iconColor">#8A8B8F</color>
+
 </resources>
