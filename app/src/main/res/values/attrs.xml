@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RecordButton">
+        <attr name="innerCircleColor" format="color" />
+        <attr name="outerCircleColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="outerCircleWidth" format="float" />
+    </declare-styleable>
+</resources>
