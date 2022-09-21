@@ -64,4 +64,7 @@ abstract class BaseFragment(@LayoutRes val resId: Int) : Fragment(resId) {
     }
 
     fun showLoading(loading: Boolean) = controller.showLoading(loading)
+    fun showNavigation(visible: Boolean) = controller.showNavigation(visible)
+    fun checkPermission() = controller.checkPermission()
+    fun requestPermission() = controller.requestPermission()
 }

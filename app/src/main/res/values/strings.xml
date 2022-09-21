@@ -22,23 +22,26 @@
     <string name="log_out">Log out</string>
     <string name="anchor_name">\@%s</string>
     <string name="setting_and_privacy">Settings and privacy</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="about">About</string>
     <string name="term_service">Terms of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="settings">Settings</string>
     <string name="app_version">v%1$s(%2$d)</string>
+    <string name="request_permission_title">%s need permission to record</string>
+    <string name="request_permission_one">Please allow camera and microphone access under app permission settings.</string>
+    <string name="grant_permissions">Grant permissions</string>
+    <string name="flip">Flip</string>
+    <string name="filters">Filters</string>
+    <string name="beautify">Beautify</string>
+    <string name="timer">Timer</string>
+    <string name="flash">Flash</string>
+    <string name="upload">Upload</string>
+    <string name="sounds">Sounds</string>
+    <string name="stop_record">Stop recording</string>
+    <string name="pause_recording">Pause recording</string>
+    <string name="start_recording">Start recording</string>
+    <string name="finish_recording">Finish recording</string>
+    <string name="discard_current_sound">Discard current sound and recording progress?</string>
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
 </resources>
