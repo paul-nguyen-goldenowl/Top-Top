@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,11 +16,12 @@ import com.ln.simplechat.ui.viewBindings
 import com.ln.toptop.R
 import com.ln.toptop.databinding.ActivityMainBinding
 import com.ln.toptop.ui.main.LayoutController
-import com.ln.toptop.util.disableTooltip
+import com.ln.toptop.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController {
+class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController,
+    NavController.OnDestinationChangedListener {
     private lateinit var navController: NavController
     private lateinit var bottomNavBar: BottomNavigationView
     private val binding by viewBindings(ActivityMainBinding::bind)
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
             .findFragmentById(R.id.hostFragment) as NavHostFragment
         navController = navHostFragment.navController
         setupBottomNavigation()
+        navController.addOnDestinationChangedListener(this)
     }
 
     private fun setupBottomNavigation() {
@@ -40,6 +43,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
 
     override fun showLoading(loading: Boolean) {
         binding.progressBar.isVisible = loading
+    }
+
+    fun changeNavBarColor(systemBarColors: SystemBarColors) {
+        binding.bottomNavBar.changeNavBarColor(systemBarColors)
+        when (systemBarColors) {
+            SystemBarColors.DARK -> binding.imageViewAddIcon.changeTint(R.color.white)
+            SystemBarColors.LIGHT -> binding.imageViewAddIcon.changeTint(R.color.black)
+        }
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        when (destination.id) {
+            R.id.feedFragment -> {
+                window?.setBackgroundDrawableResource(R.color.black)
+                changeSystemBars(SystemBarColors.DARK)
+                changeNavBarColor(SystemBarColors.DARK)
+            }
+            else -> {
+                window?.setBackgroundDrawableResource(R.color.white)
+                changeSystemBars(SystemBarColors.LIGHT)
+                changeNavBarColor(SystemBarColors.LIGHT)
+            }
+            /* todo(hide navbar sub pages )*/
+        }
     }
 
     override fun showNavigation(visible: Boolean) {
