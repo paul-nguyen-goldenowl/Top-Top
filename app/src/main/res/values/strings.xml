@@ -44,4 +44,6 @@
     <string name="discard_current_sound">Discard current sound and recording progress?</string>
     <string name="discard">Discard</string>
     <string name="cancel">Cancel</string>
+    <string name="next">Next</string>
+    <string name="play_video">Play video</string>
 </resources>

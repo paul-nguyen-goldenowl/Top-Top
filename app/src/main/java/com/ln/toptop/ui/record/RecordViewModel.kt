@@ -6,12 +6,13 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ln.toptop.data.local.video.RecordRepo
+import com.ln.toptop.model.RecordDescriptor
+import com.ln.toptop.model.RecordFile
 import com.ln.toptop.ui.base.BaseViewModel
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.VideoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,12 +25,16 @@ class RecordViewModel @Inject constructor(
 
     private var timeCreated = 0L
 
-    lateinit var recordFile: File
-    fun startRecord(context: Context): File {
+    private var recordDescriptor: RecordDescriptor? = null
+
+    private val _localVideo = MutableLiveData<RecordFile?>()
+    val localVideo: LiveData<RecordFile?> = _localVideo
+
+    fun startRecord(context: Context): RecordDescriptor? {
         _state.value = _state.value?.copy(started = true, recording = true)
         timeCreated = System.currentTimeMillis()
-        recordFile = recordRepo.initVideo(context, timeCreated)
-        return recordFile
+        recordDescriptor = recordRepo.initVideo(context, timeCreated)
+        return recordDescriptor
     }
 
     fun resumeRecord() {
@@ -41,11 +46,12 @@ class RecordViewModel @Inject constructor(
     }
 
     fun stopRecord(context: Context) {
-
+        _state.value = _state.value?.copy(recording = false)
+        recordRepo.stopVideo(context)
     }
 
     private fun getRecordDuration(context: Context): Int? {
-        val mediaPlayer = MediaPlayer.create(context, recordFile.toUri())
+        val mediaPlayer = MediaPlayer.create(context, recordDescriptor?.filePath?.toUri())
         val duration = mediaPlayer?.duration
         mediaPlayer?.release()
 
@@ -65,12 +71,19 @@ class RecordViewModel @Inject constructor(
 
         override fun onVideoTaken(result: VideoResult) {
             super.onVideoTaken(result)
-            Timber.d("Video has been taken. filePath=$recordFile")
-
-
+            Timber.d("Video has been taken. filePath=$recordDescriptor")
             val duration = getRecordDuration(context)
             Timber.d("duration is $duration")
+            _localVideo.value = RecordFile(
+                recordDescriptor?.filePath,
+                duration?.toLong() ?: 0,
+                timeCreated
+            )
 
         }
+    }
+
+    fun resetLocalVideo() {
+        _localVideo.value = null
     }
 }

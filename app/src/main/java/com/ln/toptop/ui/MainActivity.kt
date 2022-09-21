@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
         destination: NavDestination,
         arguments: Bundle?
     ) {
+        if (destination.id in mainPages) {
+            showNavigation(true)
+        } else
+            showNavigation(false)
+
         when (destination.id) {
             R.id.feedFragment -> {
                 window?.setBackgroundDrawableResource(R.color.black)
@@ -69,7 +74,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
                 changeSystemBars(SystemBarColors.LIGHT)
                 changeNavBarColor(SystemBarColors.LIGHT)
             }
-            /* todo(hide navbar sub pages )*/
         }
     }
 
@@ -111,5 +115,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LayoutController
 
     companion object {
         const val READ_STORAGE_REQUEST_CODE = 1001
+        val mainPages = listOf(R.id.feedFragment, R.id.authFragment)
     }
 }
