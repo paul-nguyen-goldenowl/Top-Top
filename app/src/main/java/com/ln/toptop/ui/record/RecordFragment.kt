@@ -2,11 +2,12 @@ package com.ln.toptop.ui.record
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ln.simplechat.ui.viewBindings
 import com.ln.toptop.R
@@ -21,7 +22,6 @@ import com.otaliastudios.cameraview.controls.Mode
 import com.otaliastudios.cameraview.gesture.Gesture
 import com.otaliastudios.cameraview.gesture.GestureAction
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -34,7 +34,6 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showNavigation(false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,6 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
                     if (viewModel.state.value?.recording != true)
                         showConfirmDialog()
                 } else {
-                    showNavigation(true)
                     isEnabled = false
                     activity?.onBackPressed()
                 }
@@ -61,22 +59,43 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
     override fun setObservers() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
         }
+        viewModel.localVideo.observe(viewLifecycleOwner) { localVideo ->
+            localVideo?.let {
+                findNavController().navigate(
+                    RecordFragmentDirections.actionRecordFragmentToPreviewFragment(
+                        localVideo
+                    )
+                )
+                viewModel.resetLocalVideo()
+            }
+        }
     }
 
     override fun setLayout() {
         setCameraView()
         setButtons()
+
+        binding.permissionsLayout.textView.text =
+            getString(
+                R.string.request_permission_title,
+                getString(R.string.app_name)
+            )
     }
 
     private fun setButtons() {
         setRecordButton()
         binding.btnClose.setOnClickListener {
-            showNavigation(true)
             findNavController().navigateUp()
         }
         binding.permissionsLayout.grantPermissionsBtn.setOnClickListener {
             binding.permissionsLayout.permissionsLayout.isVisible = false
             requestPermission()
+        }
+        binding.btnFinishRecord.setOnClickListener {
+            viewModel.stopRecord(requireContext())
+            if (cameraView.isTakingVideo) {
+                cameraView.stopVideo()
+            }
         }
     }
 
@@ -84,16 +103,18 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
         binding.btnRecord.actionListener = object : RecordButton.ActionListener {
             override fun onStartRecord() {
                 Timber.d("onStartRecord")
-                binding.btnUpload.hide()
-                binding.tvUpload.hide()
-                binding.btnFinishRecord.show()
-                binding.btnDiscard.show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (viewModel.state.value?.recording == true) {
+                        binding.btnUpload.hide()
+                        binding.tvUpload.hide()
+                        binding.btnFinishRecord.show()
+                        binding.btnDiscard.show()
+                    }
+                }, 1000)
 
-                lifecycleScope.launch {
-                }
                 val file =
-                    viewModel.startRecord(requireContext())
-                cameraView.takeVideo(file)
+                    viewModel.startRecord(requireContext()) ?: return
+                cameraView.takeVideo(file.fileDescriptor)
             }
 
             override fun onResumeRecord() {
@@ -102,21 +123,27 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
             }
 
             override fun onPauseRecord() {
-                Timber.d("onPauseRecord")
-                cameraView.stopVideo()
+                if (cameraView.isTakingVideo) {
+                    cameraView.stopVideo()
+                }
                 viewModel.pauseRecord()
             }
 
             override fun onEndRecord() {
-                Timber.d("onEndRecord")
+                if (cameraView.isTakingVideo) {
+                    cameraView.stopVideo()
+                }
+                viewModel.stopRecord(requireContext())
             }
 
             override fun onDiscardRecord() {
-                Timber.d("onDiscardRecord")
+                if (cameraView.isTakingVideo) {
+                    cameraView.stopVideo()
+                }
             }
 
             override fun onDurationTooShortError() {
-                Timber.d("onDurationTooShortError")
+
             }
         }
     }
@@ -163,7 +190,6 @@ class RecordFragment : BaseFragment(R.layout.fragment_record) {
         AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.discard_current_sound))
             .setPositiveButton(getString(R.string.discard)) { _, _ ->
-                showNavigation(true)
                 findNavController().navigateUp()
             }
             .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
